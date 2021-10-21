@@ -1,4 +1,5 @@
 const User = require('../../models/user.js').User;
+const bcrypt = require('bcrypt-nodejs');
 
 function register(req, res){
     const body = req.body;

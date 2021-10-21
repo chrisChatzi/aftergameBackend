@@ -1,5 +1,4 @@
-var config = require("./config"),
-    fs = require("fs"),
+const config = require("./config"),
     express = require('express'),
     path = require('path'),
     app = require('express')();
@@ -8,7 +7,6 @@ var config = require("./config"),
     mongodb = mongoose.connection,
     mongoPath = config.mongoPath,
     bodyParser = require('body-parser'),
-    bcrypt = require('bcrypt-nodejs'),
     httpPort = process.env.PORT || config.port;
 
 const User = require('./models/user.js').User;
@@ -16,24 +14,25 @@ const register = require('./apis/post/register.js');
 const login = require('./apis/post/login.js');
 
 // mongoDB init
-var mongoDBFunction = (function(){
-    mongodb.on('error', function(){
+const mongoDBFunction = () => {
+    mongodb.on('error', () => {
         console.log("Error connecting to the mongo DB");
     });
-    mongodb.once('open', function(){
-        var m = mongoPath.substring(mongoPath.lastIndexOf('/')+1, mongoPath.length);
+    mongodb.once('open', () => {
+        const m = mongoPath.substring(mongoPath.lastIndexOf('/')+1, mongoPath.length);
         console.log("Connected to mongoDB: '"+m+"'");
         httpServerFunction();
     });
     mongoose.connect(mongoPath);
-}());
+}
+mongoDBFunction();
 
 //send file request
-function httpServerFunction(){
+const httpServerFunction = () => {
     // static
     app.use('/', express.static((path.join(__dirname,'../dist'))));
     // /logout
-    app.get('/games', function (req, res) {
+    app.get('/games', (req, res) => {
 
     });
 
@@ -43,7 +42,7 @@ function httpServerFunction(){
     app.post('/register', register.register);
     app.post('/login', login.login);
     //http listen
-    http.listen(httpPort, function(){
+    http.listen(httpPort, () => {
         console.log('listening on:' + config.port);
     });
 };

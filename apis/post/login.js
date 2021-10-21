@@ -1,5 +1,6 @@
 const User = require('../../models/user.js').User;
 const Token = require('../../models/token.js').Token;
+const bcrypt = require('bcrypt-nodejs');
 
 const randomGenerator = require('../../helpers/index.js').randomGenerator;
 
@@ -19,7 +20,7 @@ function login (req, res) {
             res.status(400).send('Name does not exist');
             return;
         } else {
-            bcrypt.compare(body.password, result.password, function (err, match){
+            bcrypt.compare(body.password, result.password, (err, match) => {
                 if(err){
                     console.log('Hash error', err);
                     res.status(400).send('Unexpected error');
