@@ -10,6 +10,7 @@ const config = require("./config"),
     httpPort = process.env.PORT || config.port;
 
 const User = require('./models/user.js').User;
+const games = require('./apis/get/games.js');
 const register = require('./apis/post/register.js');
 const login = require('./apis/post/login.js');
 const logout = require('./apis/post/logout.js');
@@ -33,9 +34,7 @@ const httpServerFunction = () => {
     // static
     app.use('/', express.static((path.join(__dirname,'../dist'))));
     // REST
-    app.get('/games', (req, res) => {
-
-    });
+    app.get('/games', games.games);
 
     app.use(bodyParser.json({limit: "50mb"}));
     app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}))
