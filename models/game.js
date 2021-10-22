@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const Game = userId => {
-    mongoose.model(`${userId}_games`, mongoose.Schema({
+    return mongoose.model(`${userId}_games`, mongoose.Schema({
         league: String,
-        week: String,
+        week: Number,
         team: String,
         data: Object
     }));

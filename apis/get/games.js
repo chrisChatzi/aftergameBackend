@@ -1,12 +1,12 @@
 const Token = require('../../models/token.js').Token;
-const Game = require('../../models/game.js').Game;
+const Game = require('../../models/game.js');
+const mongoose = require('mongoose');
 
 function games (req, res) {
     const authUser = req.get('x-auth-user');
     const authToken = req.get('x-auth-token');
     Token.findOne({userId: authUser, token: authToken}, (err, result) => {
         if(err){
-            console.log('Hash error', err);
             res.status(400).send('Unexpected error');
             return;
         }
@@ -20,7 +20,14 @@ function games (req, res) {
                 res.status(401).send('Token expired');
                 return;
             }
-            res.status(200).send('getem')
+            // Check if user's games collection exists
+            Game(authUser).find({}, (err, result) => {
+                if(err){
+                    res.status(400).send('Unexpected error');
+                    return;
+                }
+                res.status(200).send(result);
+            });
         }
     });
 }

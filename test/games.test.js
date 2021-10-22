@@ -59,7 +59,8 @@ describe("GET /games", () => {
       .set('x-auth-user', 'dummy_user')
       .expect(200)
       .then((res) => {
-        expect(res.text).to.be.eql('getem');
+        console.log('qwe X2:', res)
+        expect(res.body).to.be.an('array');
         done();
       })
       .catch((err) => {
