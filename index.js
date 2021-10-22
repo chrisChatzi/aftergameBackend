@@ -12,6 +12,7 @@ const config = require("./config"),
 const User = require('./models/user.js').User;
 const register = require('./apis/post/register.js');
 const login = require('./apis/post/login.js');
+const logout = require('./apis/post/logout.js');
 
 // mongoDB init
 const mongoDBFunction = () => {
@@ -31,7 +32,7 @@ mongoDBFunction();
 const httpServerFunction = () => {
     // static
     app.use('/', express.static((path.join(__dirname,'../dist'))));
-    // /logout
+    // REST
     app.get('/games', (req, res) => {
 
     });
@@ -41,6 +42,7 @@ const httpServerFunction = () => {
     
     app.post('/register', register.register);
     app.post('/login', login.login);
+    app.post('/logout', logout.logout);
     //http listen
     http.listen(httpPort, () => {
         console.log('listening on:' + config.port);
