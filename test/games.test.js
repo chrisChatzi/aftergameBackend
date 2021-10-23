@@ -59,7 +59,6 @@ describe("GET /games", () => {
       .set('x-auth-user', 'dummy_user')
       .expect(200)
       .then((res) => {
-        console.log('qwe X2:', res)
         expect(res.body).to.be.an('array');
         done();
       })
