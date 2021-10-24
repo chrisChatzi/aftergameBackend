@@ -14,6 +14,7 @@ const games = require('./apis/get/games.js');
 const register = require('./apis/post/register.js');
 const login = require('./apis/post/login.js');
 const logout = require('./apis/post/logout.js');
+const gamePost = require('./apis/post/game.js');
 
 // mongoDB init
 const mongoDBFunction = () => {
@@ -42,6 +43,7 @@ const httpServerFunction = () => {
     app.post('/register', register.register);
     app.post('/login', login.login);
     app.post('/logout', logout.logout);
+    app.post('/game', gamePost.game);
     //http listen
     http.listen(httpPort, () => {
         console.log('listening on:' + config.port);
