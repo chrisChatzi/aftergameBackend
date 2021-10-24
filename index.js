@@ -36,6 +36,7 @@ const httpServerFunction = () => {
     app.use('/', express.static((path.join(__dirname,'../dist'))));
     // REST
     app.get('/games', games.games);
+    app.get('/game', games.oneGame);    // ?league=superleague_gr&week=1
 
     app.use(bodyParser.json({limit: "50mb"}));
     app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}))
