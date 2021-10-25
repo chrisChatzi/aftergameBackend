@@ -14,8 +14,9 @@ describe("GET /game", () => {
   it("should confirm league is missing", (done) => {
     request(app)
       .get("/game")
-      .set('x-auth-token', 'dummy_token')
-      .set('x-auth-user', 'dummy_user')
+      .set('x-auth-user', 'test4')
+      .set('x-auth-company', 'test')
+      .set('x-auth-alias', 'gr_test_EmQEvx')
       .expect(400)
       .then((res) => {
         expect(res.text).to.be.eql('League is missing');
@@ -29,8 +30,9 @@ describe("GET /game", () => {
     request(app)
       .get("/game")
       .query({league: 'superleague_gr'}) 
-      .set('x-auth-token', 'dummy_token')
-      .set('x-auth-user', 'dummy_user')
+      .set('x-auth-user', 'test4')
+      .set('x-auth-company', 'test')
+      .set('x-auth-alias', 'gr_test_EmQEvx')
       .expect(400)
       .then((res) => {
         expect(res.text).to.be.eql('Week is missing');
@@ -44,8 +46,9 @@ describe("GET /game", () => {
     request(app)
       .get("/game")
       .query({league: 'superleague_gr', week: 100})
-      .set('x-auth-token', 'dummy_token')
-      .set('x-auth-user', 'dummy_user')
+      .set('x-auth-user', 'test4')
+      .set('x-auth-company', 'test')
+      .set('x-auth-alias', 'gr_test_EmQEvx')
       .expect(400)
       .then((res) => {
         expect(res.text).to.be.eql('Game does not exist');
@@ -59,8 +62,9 @@ describe("GET /game", () => {
     request(app)
       .get("/game")
       .query({league: 'superleague_gr', week: 2})
-      .set('x-auth-token', 'dummy_token')
       .set('x-auth-user', 'dummy_user')
+      .set('x-auth-company', 'test')
+      .set('x-auth-alias', 'gr_test_EmQEvx')
       .expect(200)
       .then((res) => {
         expect(res.text).to.be.a('string');

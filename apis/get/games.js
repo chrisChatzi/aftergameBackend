@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Game = require('../../models/game.js');
 const tokenCheck = require('../../helpers/tokenChecker').tokenCheck;
+const userCheck = require('../../helpers/userChecker').userCheck;
 
 function games (req, res) {
     const authUser = req.get('x-auth-user');
@@ -23,7 +24,8 @@ function games (req, res) {
 
 function oneGame (req, res) {
     const authUser = req.get('x-auth-user');
-    const authToken = req.get('x-auth-token');
+    const authCompany = req.get('x-auth-company');
+    const authAlias = req.get('x-auth-alias');
     const league = req.query.league;
     const week = req.query.week;
     if(!league){
@@ -35,7 +37,7 @@ function oneGame (req, res) {
         return;
     }
     delete mongoose.connection.models[`${authUser}_games`];
-    tokenCheck(authUser, authToken)
+    userCheck(authUser, authCompany, authAlias)
         .then(v => {
             // Check if user's games collection exists
             Game(authUser).find({league, week}, (err, result) => {

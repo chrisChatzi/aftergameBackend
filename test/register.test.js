@@ -39,7 +39,7 @@ describe("POST /register", () => {
   it("should confirm that name already exists", (done) => {
     request(app)
       .post("/register")
-      .send({name: 'test', email: 'qwe@qwe.com', country: 'gr', password: '123'})
+      .send({name: 'test', email: 'qwe@qwe.com', country: 'gr', password: '123', company: 'testCompany'})
       .expect(400)
       .then((res) => {
         expect(res.text).to.be.eql('Name already exists');
@@ -52,7 +52,7 @@ describe("POST /register", () => {
   // it("should confirm that INSERT works", (done) => {
   //   request(app)
   //     .post("/register")
-  //     .send({name: 'test3', email: 'qwe@qwe.com', country: 'gr', password: '123'})
+  //     .send({name: 'test4', email: 'qwe@qwe.com', country: 'gr', password: '123', company: 'test'})
   //     .expect(200)
   //     .then((res) => {
   //       expect(res.text).to.be.eql('User created');
