@@ -1,16 +1,17 @@
 const mongoose = require('mongoose');
 
-const League = userId => {
-    return mongoose.model(`${userId}_leagues`, mongoose.Schema({
-        leagueId: {
+const Team = userId => {
+    return mongoose.model(`${userId}_teams`, mongoose.Schema({
+        teamId: {
             type: String,
             required: true
         },
+        leagueId: String,
         name: String,
+        league: String,
         country: String,
         photoPath: String
     }));
 }
 
-
-module.exports = League;
+module.exports = Team;

@@ -10,12 +10,14 @@ const config = require("./config"),
     httpPort = process.env.PORT || config.port;
 
 const games = require('./apis/get/games.js');
+const teams = require('./apis/get/teams.js');
 const leagues = require('./apis/get/leagues.js');
 const register = require('./apis/post/register.js');
 const login = require('./apis/post/login.js');
 const logout = require('./apis/post/logout.js');
 const gamePost = require('./apis/post/game.js');
 const leaguePost = require('./apis/post/league.js');
+const teamPost = require('./apis/post/team.js');
 
 // mongoDB init
 const mongoDBFunction = () => {
@@ -39,6 +41,7 @@ const httpServerFunction = () => {
     app.get('/games', games.games);
     app.get('/leagues', leagues.leagues);
     app.get('/game', games.oneGame);    // ?league=superleague_gr&week=1
+    app.get('/teams', teams.teams);    // ?team=AEK Athens&league=superleague_gr&country=gr
 
     app.use(bodyParser.json({limit: "50mb"}));
     app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}))
@@ -48,6 +51,7 @@ const httpServerFunction = () => {
     app.post('/logout', logout.logout);
     app.post('/game', gamePost.game);
     app.post('/league', leaguePost.league);
+    app.post('/team', teamPost.team);
     //http listen
     http.listen(httpPort, () => {
         console.log('listening on:' + config.port);
