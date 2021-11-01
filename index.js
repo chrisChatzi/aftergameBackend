@@ -10,6 +10,7 @@ const config = require("./config"),
     httpPort = process.env.PORT || config.port;
 
 const games = require('./apis/get/games.js');
+const players = require('./apis/get/players.js');
 const teams = require('./apis/get/teams.js');
 const leagues = require('./apis/get/leagues.js');
 const register = require('./apis/post/register.js');
@@ -18,6 +19,7 @@ const logout = require('./apis/post/logout.js');
 const gamePost = require('./apis/post/game.js');
 const leaguePost = require('./apis/post/league.js');
 const teamPost = require('./apis/post/team.js');
+const playerPost = require('./apis/post/player.js');
 
 // mongoDB init
 const mongoDBFunction = () => {
@@ -42,6 +44,7 @@ const httpServerFunction = () => {
     app.get('/leagues', leagues.leagues);
     app.get('/game', games.oneGame);    // ?league=superleague_gr&week=1
     app.get('/teams', teams.teams);    // ?team=AEK Athens&league=superleague_gr&country=gr
+    app.get('/players', players.players);    // ?name teamId leagueId
 
     app.use(bodyParser.json({limit: "50mb"}));
     app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}))
@@ -52,6 +55,7 @@ const httpServerFunction = () => {
     app.post('/game', gamePost.game);
     app.post('/league', leaguePost.league);
     app.post('/team', teamPost.team);
+    app.post('/player', playerPost.player);
     //http listen
     http.listen(httpPort, () => {
         console.log('listening on:' + config.port);

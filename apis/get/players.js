@@ -1,23 +1,24 @@
 const mongoose = require('mongoose');
-const Team = require('../../models/team.js');
+const Player = require('../../models/player.js');
 const userCheck = require('../../helpers/userChecker').userCheck;
 
-function teams (req, res) {
+function players (req, res) {
     // Check if there is a query
     const query = req.query;
     const searchQuery = {};
-    if(query && query.team) searchQuery.name = query.team;
-    if(query && query.league) searchQuery.league = query.league;
+    if(query && query.name) searchQuery.name = query.name;
+    if(query && query.playerId) searchQuery.playerId = query.playerId;
+    if(query && query.teamId) searchQuery.teamId = query.teamId;
     if(query && query.leagueId) searchQuery.leagueId = query.leagueId;
     // Auth
     const authUser = req.get('x-auth-user');
     const authCompany = req.get('x-auth-company');
     const authAlias = req.get('x-auth-alias');
-    delete mongoose.connection.models[`${authUser}_teams`];
+    delete mongoose.connection.models[`${authUser}_players`];
     userCheck(authUser, authCompany, authAlias)
         .then(v => {
             // Check if user's teams collection exists
-            Team(authUser).find(searchQuery, (err, result) => {
+            Player(authUser).find(searchQuery, (err, result) => {
                 if(err){
                     res.status(400).send('Unexpected error');
                     return;
@@ -31,5 +32,5 @@ function teams (req, res) {
 }
 
 module.exports = {
-    teams
+    players
 };
